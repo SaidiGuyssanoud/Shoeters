@@ -3,6 +3,9 @@ const express = require('express')
 const app = express()
 const mysql = require('promise-mysql')
 
+const userRoutes = require('./routes/userRouter')
+const productRoutes = require('./routes/productRouter')
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -22,12 +25,9 @@ app.listen(port, () => {
 
 mysql.createConnection(connectionOptions)
     .then(async (db) => {
-        app.get("/", async (req, res) => {
 
-            res.send("Test OK")
-
-        })
+        userRoutes(app, db)
+        productRoutes(app, db)
 
 
     })
-    // .catch(error)
