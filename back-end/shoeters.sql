@@ -143,19 +143,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `user_id_2` (`user_id`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `users`
---
-
-INSERT INTO `users` (`user_id`, `email`, `password`, `creation_date`) VALUES
-(2, 'habib2@gmail.com', 'hello', '2023-01-24 12:16:47'),
-(3, 'habib3@gmail.com', '$2b$10$BRgaiHIlwtHo9rvAvT1esOEiohKwnasUmCRCn0sT9Z6jWeO2XAWwe', '2023-01-24 17:11:19'),
-(4, 'habib4@gmail.com', '$2b$10$JDz2stJJJpxxpEzZH8QQBO7jb65wImrG4SORfBE5fFbmZXMEH1R.m', '2023-01-24 17:27:46'),
-(1, 'habib@gmail.com', 'hello', '2023-01-24 12:11:00');
-
---
--- Contraintes pour les tables déchargées
---
 
 --
 -- Contraintes pour la table `products`

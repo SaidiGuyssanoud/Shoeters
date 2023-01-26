@@ -2,10 +2,11 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 module.exports = function userRouter(app, db) {
-    app.get("/users/:id", async (req, res) => {
-        const id = req.params.id
-        const responseDB = await db.query(`SELECT * FROM categories WHERE id = ?`, [id])
-        res.send(responseDB)
+
+    app.get("/users", async (req, res) => {
+        const allUsers = await db.query(`SELECT * FROM users`)
+        res.send(allUsers)
+
     })
 
     app.post('/signup', async (req, res) => {
