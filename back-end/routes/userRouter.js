@@ -28,10 +28,6 @@ module.exports = function userRouter(app, db) {
 
         })
 
-
-
-        // const responseDB = await db.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, password])
-        // res.send(responseDB)
     })
 
     app.get('/login', async (req, res) => {
@@ -41,13 +37,35 @@ module.exports = function userRouter(app, db) {
         const email = req.body.email
         const password = req.body.password
 
-        const userToCheck = await db.query(`SELECT email, password FROM users WHERE email = "${email}"`)
 
-        // if () return res.sendStatus(401)({
-        //     message: "L'adresse email n'est pas reconnue"
-        //  })
+        if (email === undefined) {
+            return res.sendStatus(401)({
+                message: "L'adresse email ne peut pas être vide"
+            })
+        } else if (password === undefined) {
+            return res.sendStatus(401)({
+                message: "Le mot de passe ne peut pas être vide"
+            })
+        } else {
 
-        //res.send(responseDB)
+            const userToCheck = await db.query(`SELECT email, password FROM users WHERE email = "${email}"`)
+
+            bcrypt.hash(password, 10, (err, hash) => {
+                if (err) {
+                    return res.status(500).json({
+                        error: err
+                    })
+                }
+
+                else {
+                    db.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, hash])
+                }
+
+            })
+            res.send(userToCheck)
+
+        }
+
 
     })
 }

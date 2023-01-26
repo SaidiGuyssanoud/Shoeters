@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 25 jan. 2023 à 22:56
+-- Généré le : jeu. 26 jan. 2023 à 15:49
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -49,7 +49,16 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `brand_id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_name` varchar(64) NOT NULL,
   PRIMARY KEY (`brand_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `brands`
+--
+
+INSERT INTO `brands` (`brand_id`, `brand_name`) VALUES
+(1, 'Nike'),
+(2, 'Puma'),
+(3, 'Adidas');
 
 -- --------------------------------------------------------
 
@@ -115,15 +124,29 @@ CREATE TABLE IF NOT EXISTS `products` (
   `brand_id` int(11) NOT NULL,
   `product_img` varchar(512) NOT NULL,
   `price` decimal(5,2) NOT NULL,
-  `quantity_in_stock` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `quantity_in_stock` int(11) NOT NULL DEFAULT '10',
+  `category_id` int(11) NOT NULL DEFAULT '1',
   `gender_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`),
   UNIQUE KEY `product_id` (`product_id`),
   KEY `fk_brand_id` (`brand_id`),
-  KEY `fk_category_id` (`category_id`),
   KEY `fk_gender_id` (`gender_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `product_img`, `price`, `quantity_in_stock`, `category_id`, `gender_id`) VALUES
+(2, 'Nike Dunk Low Retro', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTWoDh1GEHz0xNAIjxEyZMU_1UV-bSIDTQ9g&usqp=CAU', '99.99', 10, 1, 1),
+(3, 'Puma wild Rider layers', 2, 'https://media.gqmagazine.fr/photos/60ace6ec59feb6bf2d96e9bb/master/w_1920,h_1280,c_limit/25052021_JAY_01.jpg', '99.99', 10, 1, 1),
+(4, 'Adidas Niteball', 3, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAIRixflZv7TSILjVds0O6cm9ZsOeYLIcXPA&usqp=CAU ', '99.99', 10, 1, 1),
+(5, 'Puma Slipstream', 2, 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_450,h_450/global/388634/03/sv01/fnd/EEA/fmt/png/Baskets-Slipstream-Suede-FS', '89.99', 10, 1, 2),
+(6, 'Nike Blazer Bordeaux', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI62tRQBAOH7XVNRdhSFWOcgZ9INzdQkJBXrbd6xRP0UQXAVkrcIbUZpq6MJtNSwxS3WA&usqp=CAU', '89.99', 10, 1, 2),
+(7, 'Adidas Nmd Light Gray', 3, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWmQWd4EDgpOsVJLhLDX7cnxXMeRoHm1ZxRg&usqp=CAU', '89.99', 10, 1, 2),
+(8, 'Nike Huarache Big Run', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ98J4ZWpKfcCfxMArVtbWL6MUjlowNEwg_LQ&usqp=CAU', '49.99', 10, 1, 3),
+(9, 'Puma Rs-x Toys', 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRCdfefjY4_adVx87Mlel1fhCmXsJ5NUJ_nQ&usqp=CAU', '49.99', 10, 1, 3),
+(10, ' Adidas High Top Postmove', 3, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgPYXt_SGQ-1IQywi4I20lHtcybzh7BXnblA&usqp=CAU', '49.99', 10, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -143,13 +166,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `user_id_2` (`user_id`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `password`, `creation_date`) VALUES
+(2, 'habib2@gmail.com', 'hello', '2023-01-24 12:16:47'),
+(3, 'habib3@gmail.com', '$2b$10$BRgaiHIlwtHo9rvAvT1esOEiohKwnasUmCRCn0sT9Z6jWeO2XAWwe', '2023-01-24 17:11:19'),
+(4, 'habib4@gmail.com', '$2b$10$JDz2stJJJpxxpEzZH8QQBO7jb65wImrG4SORfBE5fFbmZXMEH1R.m', '2023-01-24 17:27:46'),
+(1, 'habib@gmail.com', 'hello', '2023-01-24 12:11:00');
+
+--
+-- Contraintes pour les tables déchargées
+--
 
 --
 -- Contraintes pour la table `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_brand_id` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`),
-  ADD CONSTRAINT `fk_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`),
   ADD CONSTRAINT `fk_gender_id` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`gender_id`);
 COMMIT;
 
